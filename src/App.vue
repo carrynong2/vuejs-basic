@@ -1,30 +1,47 @@
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
+  import { reactive } from 'vue';
+  const gendersList = ["ชาย", "หญิง", "ไม่ระบุ"]
+  const interestsList = ["หนังสือ", "กีฬา", "การเมือง", "เกม"]
+
+  const formData = reactive({
+    interests: []
+  })
+
+  const submitForm = () => {
+    console.log('submitForm');
+    console.log('formData ', formData);
+    console.log('interests', formData.interests.join(","));
+  }
 </script>
 
 <template>
   <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+    <div>
+      <label for="">Firstname</label>
+      <input type="text" name="firstname" v-model="formData.firstname">
+    </div>
+    <div>
+      <label for="">Lastname</label>
+      <input type="text" name="lastname" v-model="formData.lastname">
+    </div>
+    <div>
+      <label for="">Gender</label>
+      <div v-for="gender in gendersList">
+        <input type="radio" name="gender" :value="gender" v-model="formData.gender">
+        {{ gender }}
+      </div>
+    </div>
+    <div>
+      <label for="">Interests</label>
+      <div v-for="interest in interestsList">
+        <input type="checkbox" name="interest" :value="interest" v-model="formData.interests">
+        {{ interest }}
+      </div>
+    </div>
+    <div>
+      <label for="">Description</label>
+      <textarea v-model="formData.description"></textarea>
+    </div>
+    <button @click="submitForm()">Submit</button>
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
-
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
